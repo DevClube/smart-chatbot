@@ -24,7 +24,7 @@ import java.util.List;
 @Component
 public class ragDataLoader {
 
-    @Value("classpath:/pdf/mediani.pdf")
+    @Value("classpath:/pdf/cv.pdf")
     private Resource pdfResource;
     @Value("store-data-v1.json")
     private String storeFile;
@@ -72,9 +72,6 @@ public class ragDataLoader {
             List<Document> chunks = textSplitter.split(documents);
 
             vectorStore.accept(chunks);
-
-
-
         }
     }
 

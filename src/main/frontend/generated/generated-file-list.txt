@@ -1,5 +1,6 @@
 ChatAiService.ts
 PersonService.ts
+com/medev/smartchatbot/entites/History.ts
 com/vaadin/hilla/crud/filter/Filter.ts
 com/vaadin/hilla/crud/filter/FilterUnion.ts
 com/vaadin/hilla/crud/filter/OrFilter.ts
@@ -14,6 +15,7 @@ org/springframework/data/domain/Sort/Direction.ts
 org/springframework/data/domain/Sort/NullHandling.ts
 connect-client.default.ts
 endpoints.ts
+com/medev/smartchatbot/entites/HistoryModel.ts
 com/vaadin/hilla/crud/filter/FilterModel.ts
 com/vaadin/hilla/crud/filter/OrFilterModel.ts
 com/vaadin/hilla/crud/filter/AndFilterModel.ts

@@ -13,6 +13,16 @@
         "route": "chat",
         "params": {},
         "title": "Chat"
+      },
+      {
+        "route": "history",
+        "params": {},
+        "title": "History"
+      },
+      {
+        "route": "person",
+        "params": {},
+        "title": "Person"
       }
     ]
   }

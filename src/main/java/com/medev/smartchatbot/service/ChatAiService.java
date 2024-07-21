@@ -1,6 +1,8 @@
 package com.medev.smartchatbot.service;
 
 
+import com.medev.smartchatbot.entites.History;
+import com.medev.smartchatbot.repository.HistoryRepository;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.hilla.BrowserCallable;
 import org.springframework.ai.chat.client.ChatClient;
@@ -11,6 +13,7 @@ import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -21,22 +24,35 @@ public class ChatAiService {
 
     private ChatClient chatClient;
     private VectorStore vectorStore;
+    private HistoryRepository historyRepository;
 
     @Value("classpath:/prompt/prompt-template.st")
     private Resource promptResource;
 
 
-    public ChatAiService(ChatClient.Builder builder, VectorStore vectorStore) {
+    public ChatAiService(ChatClient.Builder builder, VectorStore vectorStore, HistoryRepository historyRepository) {
         this.chatClient = builder.build();
         this.vectorStore = vectorStore;
+        this.historyRepository = historyRepository;
     }
 
     public String ragChat(String question) {
-        return chatClient.prompt()
+
+        String answer = chatClient.prompt()
                 .user(question)
                 .call()
                 .content();
+
+        History history = History.builder()
+                .question(question)
+                .answer(answer)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        historyRepository.save(history);
+        return answer;
     }
+
     public String ragChat2(String question) {
         List<Document> documents = vectorStore.similaritySearch(question);
 
@@ -51,6 +67,9 @@ public class ChatAiService {
                 .content();
     }
 
+    public List<History> getHistory() {
+        return historyRepository.findAll();
+    }
 
 
 
